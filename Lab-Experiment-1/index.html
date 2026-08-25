@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>All HTML5 Tags Demo</title>
+</head>
+<body>
+
+  <header>
+    <h1>My HTML5 Tags Page</h1>
+    <p>This page shows most HTML5 tags in one place.</p>
+  </header>
+
+  <nav>
+    <a href="#about">About</a> |
+    <a href="#media">Media</a> |
+    <a href="#form">Form</a> |
+    <a href="#table">Table</a>
+  </nav>
+
+  <main>
+
+    <section id="about">
+      <h2>Headings</h2>
+      <h1>Heading 1</h1>
+      <h2>Heading 2</h2>
+      <h3>Heading 3</h3>
+      <h4>Heading 4</h4>
+      <h5>Heading 5</h5>
+      <h6>Heading 6</h6>
+
+      <h2>Text Tags</h2>
+      <p>This is a paragraph with <b>bold</b>, <strong>strong</strong>,
+        <i>italic</i>, <em>emphasis</em>, <u>underline</u>,
+        <mark>highlighted</mark>, <small>small text</small>,
+        <sub>subscript</sub>, <sup>superscript</sup>,
+        <del>deleted text</del>, <ins>inserted text</ins>, and
+        <code>inline code</code>.</p>
+
+      <blockquote>This is a blockquote.</blockquote>
+      <pre>This is preformatted text.
+It keeps    spaces and line breaks.</pre>
+
+      <p>Press <kbd>Ctrl</kbd> + <kbd>C</kbd> to copy.</p>
+      <p>Result: <samp>Hello World</samp></p>
+      <p>Formula: <var>x</var> = <var>y</var> + 2</p>
+      <abbr title="HyperText Markup Language">HTML</abbr> is a markup language.
+      <address>123 Main Street, Delhi, India</address>
+      <hr>
+
+      <article>
+        <h2>Article Tag</h2>
+        <p>This is a self-contained article.</p>
+      </article>
+
+      <aside>
+        <p>This is an aside / side note.</p>
+      </aside>
+
+      <figure>
+        <img src="https://picsum.photos/200/100" alt="Sample image">
+        <figcaption>This is a figure caption.</figcaption>
+      </figure>
+
+      <details>
+        <summary>Click to expand</summary>
+        <p>Hidden details shown here.</p>
+      </details>
+
+      <p>Time: <time datetime="2026-08-05">August 5, 2026</time></p>
+    </section>
+
+    <section>
+      <h2>Lists</h2>
+      <ul>
+        <li>Unordered item 1</li>
+        <li>Unordered item 2</li>
+      </ul>
+      <ol>
+        <li>Ordered item 1</li>
+        <li>Ordered item 2</li>
+      </ol>
+      <dl>
+        <dt>HTML</dt>
+        <dd>HyperText Markup Language</dd>
+      </dl>
+    </section>
+
+    <section id="media">
+      <h2>Media Tags</h2>
+      <img src="https://picsum.photos/200/120" alt="Random image">
+
+      <audio controls>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        Your browser does not support audio.
+      </audio>
+
+      <video width="300" controls>
+        <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
+        Your browser does not support video.
+      </video>
+
+      <br><br>
+      <iframe src="https://en.wikipedia.org/wiki/HTML5" width="300" height="150" title="Wikipedia HTML5"></iframe>
+
+      <svg width="100" height="100">
+        <circle cx="50" cy="50" r="40" stroke="black" fill="lightblue" />
+      </svg>
+
+      <canvas id="myCanvas" width="150" height="100" style="border:1px solid #000;"></canvas>
+    </section>
+
+    <section id="form">
+      <h2>Form Tags</h2>
+      <form>
+        <fieldset>
+          <legend>Sample Form</legend>
+
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name"><br><br>
+
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email"><br><br>
+
+          <label for="pass">Password:</label>
+          <input type="password" id="pass" name="pass"><br><br>
+
+          <label for="num">Number:</label>
+          <input type="number" id="num" name="num"><br><br>
+
+          <label for="dob">Date:</label>
+          <input type="date" id="dob" name="dob"><br><br>
+
+          <label for="color">Color:</label>
+          <input type="color" id="color" name="color"><br><br>
+
+          <label for="range">Range:</label>
+          <input type="range" id="range" name="range" min="0" max="10"><br><br>
+
+          <label>
+            <input type="checkbox" name="check"> Checkbox
+          </label><br>
+
+          <label>
+            <input type="radio" name="radio"> Radio Button
+          </label><br><br>
+
+          <label for="fruits">Choose a fruit:</label>
+          <select id="fruits" name="fruits">
+            <option value="apple">Apple</option>
+            <option value="mango">Mango</option>
+          </select><br><br>
+
+          <label for="msg">Message:</label><br>
+          <textarea id="msg" name="msg" rows="3" cols="30"></textarea><br><br>
+
+          <label for="file">Upload file:</label>
+          <input type="file" id="file" name="file"><br><br>
+
+          <label for="prog">Progress:</label>
+          <progress id="prog" value="60" max="100">60%</progress><br><br>
+
+          <label for="meter">Meter:</label>
+          <meter id="meter" value="6" min="0" max="10">6 out of 10</meter><br><br>
+
+          <button type="submit">Submit</button>
+          <button type="reset">Reset</button>
+        </fieldset>
+      </form>
+    </section>
+
+    <section id="table">
+      <h2>Table Tag</h2>
+      <table border="1">
+        <caption>Sample Table</caption>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Age</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Ravi</td>
+            <td>21</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2">End of table</td>
+          </tr>
+        </tfoot>
+      </table>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2026 My HTML5 Page. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
