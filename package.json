@@ -1,0 +1,21 @@
+{
+  "name": "backenddevelopment",
+  "version": "1.0.0",
+  "description": "sapid `590012550`",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AjayKumarSah21/BackendDevelopment.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/AjayKumarSah21/BackendDevelopment/issues"
+  },
+  "homepage": "https://github.com/AjayKumarSah21/BackendDevelopment#readme"
+}
