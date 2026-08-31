@@ -9,9 +9,9 @@ sapid `590012550`
 1. [Experiment 1: html all tags](./Lab/Exp01/index.html)
    - [Experiment 1: GitHub files](https://github.com/AjayKumarSah21/BackendDevelopment/tree/main/Lab/Exp01)
 
-2. [Experiment 12 A: asdf](https://github.com/AjayKumarSah21/BackendDevelopment/tree/main/Lab/Exp02)
+2. [Experiment 12 A:](https://github.com/AjayKumarSah21/BackendDevelopment/tree/main/Lab/Exp12)
 
-3. [Experiment 3](https://github.com/AjayKumarSah21/BackendDevelopment/tree/main/Lab/Exp03)
+3. [Experiment 12 B:](https://github.com/AjayKumarSah21/BackendDevelopment/tree/main/Lab/Exp12B)
 
 ---
 
