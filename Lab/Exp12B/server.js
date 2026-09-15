@@ -1,148 +1,110 @@
-const express = require('express');
-const session = require('express-session');
-const cookieParser = require('cookie-parser');
+const express = require("express");
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 const PORT = 3000;
 
-// Temporary in-memory user storage
+// Middleware
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+app.use(
+    session({
+        secret: "mysecretkey",
+        resave: false,
+        saveUninitialized: false
+    })
+);
+
+// Temporary users
 const users = [];
 
-// Middleware
-app.use(cookieParser());
-app.use(express.urlencoded({ extended: true }));
+// Home page
+app.get("/", (req, res) => {
+    res.send(`
+        <h1>Simple User Login System</h1>
 
-// Session middleware
-app.use(session({
-    secret: 'mysecretkey',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        maxAge: 600000
-    }
-}));
-
-// Home route
-app.get('/', (req, res) => {
-    if (req.session.user) {
-        res.send(`
-            <h1>Welcome, ${req.session.user.username}!</h1>
-            <p>You are logged in.</p>
-            <a href="/dashboard">Dashboard</a><br>
-            <a href="/logout">Logout</a>
-        `);
-    } else {
-        res.send(`
-            <h1>Simple User Login System</h1>
-            <a href="/register">Register</a><br>
-            <a href="/login">Login</a>
-        `);
-    }
+        <a href="/register">Register</a><br><br>
+        <a href="/login">Login</a>
+    `);
 });
 
 // Register page
-app.get('/register', (req, res) => {
+app.get("/register", (req, res) => {
     res.send(`
-        <h1>Register</h1>
+        <h2>Register</h2>
 
         <form action="/register" method="POST">
-            <input
-                type="text"
-                name="username"
-                placeholder="Enter username"
-                required
-            >
+            <input type="text" name="username" placeholder="Username" required>
             <br><br>
 
-            <input
-                type="password"
-                name="password"
-                placeholder="Enter password"
-                required
-            >
+            <input type="password" name="password" placeholder="Password" required>
             <br><br>
 
             <button type="submit">Register</button>
         </form>
 
         <br>
-        <a href="/login">Already have an account? Login</a>
+        <a href="/login">Already registered? Login</a>
     `);
 });
 
 // Register user
-app.post('/register', (req, res) => {
+app.post("/register", (req, res) => {
     const { username, password } = req.body;
-
-    const existingUser = users.find(user => user.username === username);
-
-    if (existingUser) {
-        return res.send(`
-            <h1>Registration Failed</h1>
-            <p>Username already exists.</p>
-            <a href="/register">Try Again</a>
-        `);
-    }
 
     users.push({
         username,
         password
     });
 
-    res.redirect('/login');
+    res.send(`
+        <h2>Registration Successful!</h2>
+        <a href="/login">Go to Login</a>
+    `);
 });
 
 // Login page
-app.get('/login', (req, res) => {
+app.get("/login", (req, res) => {
     res.send(`
-        <h1>Login</h1>
+        <h2>Login</h2>
 
         <form action="/login" method="POST">
-            <input
-                type="text"
-                name="username"
-                placeholder="Enter username"
-                required
-            >
+            <input type="text" name="username" placeholder="Username" required>
             <br><br>
 
-            <input
-                type="password"
-                name="password"
-                placeholder="Enter password"
-                required
-            >
+            <input type="password" name="password" placeholder="Password" required>
             <br><br>
 
             <button type="submit">Login</button>
         </form>
 
         <br>
-        <a href="/register">Create an account</a>
+        <a href="/register">Create new account</a>
     `);
 });
 
 // Login user
-app.post('/login', (req, res) => {
+app.post("/login", (req, res) => {
     const { username, password } = req.body;
 
     const user = users.find(
-        user => user.username === username && user.password === password
+        u => u.username === username && u.password === password
     );
 
-    if (!user) {
-        return res.send(`
-            <h1>Login Failed</h1>
-            <p>Invalid username or password.</p>
+    if (user) {
+        req.session.user = {
+            username: username
+        };
+
+        res.redirect("/dashboard");
+    } else {
+        res.send(`
+            <h2>Invalid username or password</h2>
             <a href="/login">Try Again</a>
         `);
     }
-
-    req.session.user = {
-        username: user.username
-    };
-
-    res.redirect('/dashboard');
 });
 
 // Authentication middleware
@@ -150,26 +112,25 @@ function authMiddleware(req, res, next) {
     if (req.session.user) {
         next();
     } else {
-        res.redirect('/login');
+        res.redirect("/login");
     }
 }
 
-// Protected dashboard
-app.get('/dashboard', authMiddleware, (req, res) => {
+// Dashboard
+app.get("/dashboard", authMiddleware, (req, res) => {
     res.send(`
-        <h1>Dashboard</h1>
+        <h1>Welcome, ${req.session.user.username}!</h1>
 
-        <p>Welcome, ${req.session.user.username}!</p>
-        <p>This page is protected by session authentication.</p>
+        <p>You are successfully logged in.</p>
 
         <a href="/logout">Logout</a>
     `);
 });
 
 // Logout
-app.get('/logout', (req, res) => {
+app.get("/logout", (req, res) => {
     req.session.destroy(() => {
-        res.redirect('/login');
+        res.redirect("/login");
     });
 });
 
