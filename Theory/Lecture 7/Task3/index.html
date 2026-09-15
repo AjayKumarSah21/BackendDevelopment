@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JSON and localStorage</title>
+</head>
+<body>
+
+    <h1>JSON and localStorage</h1>
+
+    <script>
+
+        // Create a JavaScript object
+        const user = {
+            name: "Alice",
+            age: 25
+        };
+
+        // Try storing the object directly
+        localStorage.setItem("user", JSON.stringify(user));
+
+        // Read the stored value
+        console.log(localStorage.getItem("user"));
+
+    </script>
+
+</body>
+</html>

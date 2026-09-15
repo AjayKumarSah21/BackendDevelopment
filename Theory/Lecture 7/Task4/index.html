@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JSON.stringify and JSON.parse</title>
+</head>
+
+<body>
+
+    <h1>JSON.stringify() and JSON.parse()</h1>
+
+    <script>
+
+        // JavaScript object
+        const user = {
+            name: "Bob",
+            age: 30,
+            skills: ["JS", "Python"]
+        };
+
+        // Object → JSON String
+        const jsonString = JSON.stringify(user);
+
+        console.log("JSON String:");
+        console.log(jsonString);
+
+        // JSON String → Object
+        const obj = JSON.parse(jsonString);
+
+        console.log("JavaScript Object:");
+        console.log(obj);
+
+        // Access object properties
+        console.log("Name:", obj.name);
+        console.log("Age:", obj.age);
+        console.log("Skills:", obj.skills);
+
+    </script>
+
+</body>
+</html>

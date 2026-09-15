@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Notes / Todo App</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+        }
+
+        #noteInput {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+
+        .note-card {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 5px;
+        }
+
+        .note-card p {
+            font-size: 18px;
+        }
+
+        .note-card small {
+            color: gray;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Notes / Todo App</h1>
+
+    <div class="input-area">
+
+        <input
+            type="text"
+            id="noteInput"
+            placeholder="Type a note..."
+        >
+
+        <button onclick="addNote()">
+            Add Note
+        </button>
+
+    </div>
+
+    <div id="notesList"></div>
+
+
+    <script>
+
+        // READ NOTES
+        function getNotes() {
+
+            const raw = localStorage.getItem("notes");
+
+            return raw ? JSON.parse(raw) : [];
+        }
+
+
+        // SAVE NOTES
+        function saveNotes(notes) {
+
+            localStorage.setItem(
+                "notes",
+                JSON.stringify(notes)
+            );
+        }
+
+
+        // ADD NOTE
+        function addNote() {
+
+            const input =
+                document.getElementById("noteInput");
+
+            const text = input.value.trim();
+
+            if (text === "") {
+
+                alert("Please enter a note.");
+
+                return;
+            }
+
+            const notes = getNotes();
+
+            notes.push({
+
+                id: Date.now(),
+
+                text: text,
+
+                completed: false,
+
+                createdAt:
+                    new Date().toISOString(),
+
+                updatedAt: null
+            });
+
+            saveNotes(notes);
+
+            input.value = "";
+
+            renderNotes();
+        }
+
+
+        // DELETE NOTE
+        function deleteNote(id) {
+
+            const notes =
+                getNotes().filter(
+                    note => note.id !== id
+                );
+
+            saveNotes(notes);
+
+            renderNotes();
+        }
+
+
+        // EDIT NOTE
+        function editNote(id) {
+
+            const notes = getNotes();
+
+            const note =
+                notes.find(
+                    note => note.id === id
+                );
+
+            if (note) {
+
+                const newText =
+                    prompt(
+                        "Edit your note:",
+                        note.text
+                    );
+
+                if (
+                    newText !== null &&
+                    newText.trim() !== ""
+                ) {
+
+                    note.text =
+                        newText.trim();
+
+                    note.updatedAt =
+                        new Date().toISOString();
+
+                    saveNotes(notes);
+
+                    renderNotes();
+                }
+            }
+        }
+
+
+        // DISPLAY NOTES
+        function renderNotes() {
+
+            const container =
+                document.getElementById(
+                    "notesList"
+                );
+
+            const notes = getNotes();
+
+            container.innerHTML =
+                notes.map(note => `
+
+                    <div class="note-card">
+
+                        <p>${note.text}</p>
+
+                        <small>
+                            Created:
+                            ${note.createdAt}
+                        </small>
+
+                        <br><br>
+
+                        <button
+                            onclick="editNote(${note.id})">
+                            Edit
+                        </button>
+
+                        <button
+                            onclick="deleteNote(${note.id})">
+                            Delete
+                        </button>
+
+                    </div>
+
+                `).join("");
+        }
+
+
+        // DISPLAY SAVED NOTES WHEN PAGE LOADS
+        window.onload = renderNotes;
+
+    </script>
+
+</body>
+</html>

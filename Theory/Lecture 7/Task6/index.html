@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Helper Functions</title>
+</head>
+
+<body>
+
+    <h1>Helper Functions</h1>
+
+    <script>
+
+        // Save data to localStorage
+        function save(key, data) {
+            localStorage.setItem(key, JSON.stringify(data));
+        }
+
+        // Load data from localStorage
+        function load(key) {
+            const raw = localStorage.getItem(key);
+            return raw ? JSON.parse(raw) : null;
+        }
+
+    </script>
+
+</body>
+</html>
