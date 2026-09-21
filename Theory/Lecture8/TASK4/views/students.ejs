@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Student List</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+        .even {
+            background-color: lightgray;
+        }
+
+        .odd {
+            background-color: white;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 60%;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Student List</h1>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Branch</th>
+        </tr>
+
+        <% students.forEach((student, index) => { %>
+
+            <tr class="<%= index % 2 === 0 ? 'even' : 'odd' %>">
+                <td><%= student.id %></td>
+                <td><%= student.name %></td>
+                <td><%= student.branch %></td>
+            </tr>
+
+        <% }) %>
+
+    </table>
+
+</body>
+
+</html>
