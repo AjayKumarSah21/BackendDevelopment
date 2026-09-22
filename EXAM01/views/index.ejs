@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Notes</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>My Notes</h1>
+
+        <a href="/notes/new" class="add-button">+ Add Note</a>
+
+        <% if (notes.length === 0) { %>
+
+            <p>No notes available.</p>
+
+        <% } else { %>
+
+            <% notes.forEach(note => { %>
+
+                <div class="note">
+
+                    <h2><%= note.title %></h2>
+
+                    <p><%= note.content %></p>
+
+                    <p>
+                        <strong>Category:</strong>
+                        <%= note.category %>
+                    </p>
+
+                    <p>
+                        <strong>Created:</strong>
+                        <%= note.createdAt.toLocaleString() %>
+                    </p>
+
+                    <form action="/notes/<%= note._id %>/delete" method="POST">
+                        <button type="submit">Delete</button>
+                    </form>
+
+                </div>
+
+            <% }) %>
+
+        <% } %>
+
+    </div>
+
+</body>
+</html>
