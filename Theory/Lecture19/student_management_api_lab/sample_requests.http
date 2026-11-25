@@ -1,0 +1,26 @@
+### Create department
+POST http://127.0.0.1:8000/departments
+Content-Type: application/json
+
+{"name":"Engineering"}
+
+### Create student
+POST http://127.0.0.1:8000/students
+Content-Type: application/json
+
+{"name":"Aarav","email":"aarav@upes.ac.in","branch":"CSE","department_id":1,"enrollment_date":"2024-08-01"}
+
+### Create course
+POST http://127.0.0.1:8000/courses
+Content-Type: application/json
+
+{"id":"CS101","title":"Backend Development","credits":4,"department_id":1}
+
+### Filter + paginate students
+GET http://127.0.0.1:8000/students?branch=CSE&department_id=1&search=aarav&page=1&limit=5
+
+### Enroll student
+POST http://127.0.0.1:8000/students/1/enrollments
+Content-Type: application/json
+
+{"course_id":"CS101","semester":"Fall 2026"}

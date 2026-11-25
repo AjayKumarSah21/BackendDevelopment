@@ -4,3 +4,14 @@ venv/
 **/venv/
 .env
 .DS_Store
+# Docker image/container exports
+*.tar
+
+*.tar
+*.zip
+desktop.ini
+__pycache__/
+*.pyc
+.venv/
+venv/
+node_modules/

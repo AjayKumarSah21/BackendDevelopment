@@ -1,0 +1,4 @@
+{% extends 'todo/base.html' %}
+{% block title %}Add Task | Task Tracker{% endblock %}
+{% block content %}<section class="panel"><h1>Add a task</h1><p>What would you like to get done?</p>{% if error %}<p role="alert" class="error">{{ error }}</p>{% endif %}<form method="post" class="task-form">{% csrf_token %}<label for="title">Task title</label><input id="title" type="text" name="title" maxlength="200" required placeholder="e.g. Complete Django lab"><small id="char-count">0 / 200 characters</small><button type="submit">Save task</button></form><p><a href="{% url 'task_list' %}">← Back to task list</a></p></section>{% endblock %}
+{% block extra_js %}<script>console.log('Add Task page ready');</script>{% endblock %}

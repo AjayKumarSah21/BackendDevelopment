@@ -1,0 +1,37 @@
+Docker Ubuntu Attach Lab - Commands
+
+docker version
+docker info
+
+docker pull ubuntu
+docker images
+
+docker run ubuntu
+docker ps -a
+
+docker run -it --name ubuntu-lab ubuntu /bin/bash
+
+# Inside Ubuntu:
+pwd
+ls
+cat /etc/os-release
+exit
+
+docker start -ai ubuntu-lab
+
+docker run -d --name ubuntu-running ubuntu sleep infinity
+docker ps
+docker exec -it ubuntu-running /bin/bash
+
+# Inside Ubuntu:
+pwd
+ls
+cat /etc/os-release
+exit
+
+docker ps
+docker ps -a
+docker images
+
+# Cleanup:
+docker rm -f ubuntu-lab ubuntu-running
