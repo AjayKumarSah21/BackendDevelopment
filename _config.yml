@@ -1,3 +1,8 @@
 title: Backend Development
 description: Notes and projects about backend development
 theme: minima
+
+# The README inside this Django project contains {% extends %} / {% include %}.
+# Jekyll reads those as Liquid tags and the Pages build fails, so skip the folder.
+exclude:
+  - Lab/Django_Todo_Experiment15_Complete
