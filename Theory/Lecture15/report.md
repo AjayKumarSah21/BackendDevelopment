@@ -1,125 +1,163 @@
-# Lecture 15 — Data Modeling: Designing Models for Applications
+# Data Modeling: Designing Models for Applications
 
-**Course:** Backend Development  
-**Unit:** Unit 2 — Database Management  
-**Lecture:** 15  
-**Topic:** Data Modeling: Designing Models for Applications  
-**Course Outcome:** CO2 — Design data models that translate business requirements into database structures.
+## Lecture Information
+
+- **Lecture:** 15
+- **Unit:** Unit 2 — Database Management
+- **Topic:** Data Modeling: Designing Models for Applications
+- **Course Outcome:** CO2 — Design data models that translate business requirements into database structures.
+- **Bloom's Knowledge Level:** Create
+- **Skills Developed:** Conceptual, logical, and physical modeling; ORM/ODM implementation; data validation
+- **Applications:** Application data structures, database interaction, and schema mapping
+- **PBL Activity:** Modeling an E-Commerce system and implementing SQLAlchemy/Mongoose models
+- **Assessment:** Coding project and data-model design demonstration
 
 ---
 
 ## 1. Introduction
 
-Data modeling is the process of designing how data will be organized, stored, related, and validated in an application.
+A database schema defines how information is stored, but backend applications also need a structured way to interact with that information programmatically.
 
-A data model acts as a **blueprint** between business requirements, application code, and the database.
+**Data modeling** bridges business requirements and database implementation by defining:
 
-In the previous lecture, ER diagrams and normalization were studied. In this lecture, the focus is on converting those database designs into models that can be used directly by backend applications.
+- How data is structured
+- How data is stored
+- How entities relate to one another
+- What rules apply to the data
+- How application code accesses the data
+
+A **data model** is a conceptual representation of data structures, relationships, and rules. It acts as a blueprint for both database design and application code.
 
 ### Learning Objectives
 
-After studying this lecture, we understand:
+By the end of this topic, you should understand:
 
-- Different levels of data modeling.
-- How business requirements are converted into data models.
-- Object-Relational Mapping (ORM).
-- Object-Document Modeling (ODM).
-- SQLAlchemy in Python.
-- Mongoose in Node.js.
-- CRUD operations through models.
-- Data validation.
-- Data modeling best practices.
+- Conceptual, logical, and physical data models
+- How to translate business requirements into data models
+- Object-Relational Mapping (ORM)
+- Object Document Modeling (ODM)
+- SQLAlchemy for Python applications
+- Mongoose for Node.js applications
+- Data validation using Pydantic and Mongoose
 
 ---
 
 # 2. Levels of Data Modeling
 
-Data modeling is generally divided into three levels:
+Data modeling occurs at three major levels:
 
-1. Conceptual Data Model
-2. Logical Data Model
-3. Physical Data Model
+```text
+Conceptual Model
+      ↓
+Logical Model
+      ↓
+Physical Model
+```
+
+Each level adds more implementation detail.
 
 ---
 
 ## 2.1 Conceptual Data Model
 
-The conceptual model provides a **high-level view** of the system.
+The **conceptual data model** gives a high-level view of the system.
 
-It focuses on:
-
-- Main entities.
-- Relationships between entities.
-- Important business concepts.
-
-It does not focus on database-specific implementation details.
-
-### Example
-
-For a Student Management System:
-
-```text
-Student ---- Enrolls ----> Course
-Faculty ---- Teaches ----> Course
-Student ---- Belongs To --> Department
-```
+It identifies major entities and relationships without focusing on database implementation details.
 
 ### Purpose
 
-The conceptual model is mainly used to:
+- Understand business requirements
+- Communicate with stakeholders
+- Identify important entities
+- Identify relationships between entities
 
-- Understand business requirements.
-- Communicate with stakeholders.
-- Identify entities and relationships.
+### Components
+
+Examples of entities:
+
+- Student
+- Course
+- Faculty
+- Department
+
+Examples of relationships:
+
+- Enrolls
+- Teaches
+- BelongsTo
+
+Examples of attributes:
+
+- Name
+- Email
+- Branch
+
+### Example
+
+```text
+Student ──Enrolls──> Course
+
+Faculty ──Teaches──> Course
+
+Student ──BelongsTo──> Department
+```
+
+At this stage, implementation-specific details such as SQL column types are not required.
 
 ---
 
 ## 2.2 Logical Data Model
 
-The logical model adds more detail to the conceptual model.
+The **logical data model** adds details to the conceptual model while remaining independent of a specific database system.
 
-It defines:
+### Purpose
 
-- Attributes.
-- Data types.
-- Primary keys.
-- Foreign keys.
-- Constraints.
+Create a detailed database design before implementation.
 
-It is still independent of a particular database system.
+### Components
+
+- Entities
+- Attributes
+- Data types
+- Primary keys
+- Foreign keys
+- Constraints
 
 ### Example
 
 ```text
-Student
---------------------------------
-id               INTEGER PRIMARY KEY
-name             VARCHAR(100) NOT NULL
-email            VARCHAR(100) UNIQUE NOT NULL
-branch           VARCHAR(50)
-enrollment_date  DATE
+Student (
+    id: INTEGER PRIMARY KEY,
+    name: VARCHAR(100) NOT NULL,
+    email: VARCHAR(100) UNIQUE NOT NULL,
+    branch: VARCHAR(50),
+    enrollment_date: DATE
+)
 ```
 
-### Purpose
-
-The logical model provides a detailed design before actual implementation.
+This model defines what the data should look like but does not yet depend on a specific DBMS.
 
 ---
 
 ## 2.3 Physical Data Model
 
-The physical model converts the logical design into an actual database implementation.
+The **physical data model** converts the logical design into actual database structures for a particular DBMS.
 
-It contains:
+### Purpose
 
-- Actual tables.
-- Columns.
-- Indexes.
-- Constraints.
-- Database-specific optimizations.
-- Storage-related decisions.
+Implement the design in a specific database system.
 
-### Example
+### Components
+
+- Actual table definitions
+- Database-specific data types
+- Indexes
+- Constraints
+- Storage details
+- Partitioning strategies
+- Performance optimizations
+
+### PostgreSQL Example
 
 ```sql
 CREATE TABLE students (
@@ -127,53 +165,67 @@ CREATE TABLE students (
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     branch VARCHAR(50),
-    enrollment_date DATE DEFAULT CURRENT_DATE
+    enrollment_date DATE DEFAULT CURRENT_DATE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE INDEX idx_students_branch
 ON students(branch);
 ```
 
-### Simple Difference
+---
 
-| Model | Main Purpose |
-|---|---|
-| Conceptual | What data exists? |
-| Logical | What are the details of the data? |
-| Physical | How will the database actually store it? |
+## 2.4 Comparison of Data Modeling Levels
+
+| Level | Main Purpose | Typical Details |
+|---|---|---|
+| Conceptual | Understand the business domain | Entities and relationships |
+| Logical | Design the data structure | Attributes, types, PKs, FKs, constraints |
+| Physical | Implement in a DBMS | Tables, indexes, DB-specific optimizations |
 
 ---
 
-# 3. Translating Business Requirements to Data Models
+# 3. Translating Business Requirements into Data Models
 
-Business requirements describe what the application needs to do.
+## 3.1 General Process
 
-These requirements must be converted into a structured data model.
+A useful modeling process is:
 
-## Process
+1. **Identify entities** — What objects does the system manage?
+2. **Identify attributes** — What properties belong to each entity?
+3. **Identify relationships** — How do the entities interact?
+4. **Define constraints** — What rules must the data follow?
+5. **Choose data types** — What format should each value use?
+6. **Create the model** — Document the design using diagrams or code.
+
+---
+
+## 3.2 Student Management System Example
+
+### Business Requirements
+
+Suppose the application must support these requirements:
+
+- Students enroll in courses.
+- Courses are taught by faculty.
+- Each course belongs to a department.
+- Students receive grades for enrolled courses.
 
 ### Step 1 — Identify Entities
 
-Ask:
-
-> What objects does the system manage?
-
-Example:
-
-- Student
-- Course
-- Faculty
-- Department
-- Enrollment
+```text
+Student
+Course
+Faculty
+Department
+Enrollment
+```
 
 ### Step 2 — Identify Attributes
 
-Identify properties of each entity.
-
-Example:
+**Student**
 
 ```text
-Student:
 id
 name
 email
@@ -182,285 +234,644 @@ branch
 enrollment_date
 ```
 
+**Course**
+
+```text
+id
+title
+credits
+department_id
+```
+
+**Faculty**
+
+```text
+id
+name
+email
+department_id
+designation
+```
+
+**Department**
+
+```text
+id
+name
+building
+```
+
+**Enrollment**
+
+```text
+student_id
+course_id
+semester
+grade
+```
+
 ### Step 3 — Identify Relationships
-
-Determine how entities are connected.
-
-Example:
 
 ```text
 Department 1:M Student
+
 Department 1:M Faculty
+
 Department 1:M Course
+
+Faculty 1:M Course
+
 Student M:N Course
+      through
+    Enrollment
 ```
+
+The `Enrollment` entity resolves the many-to-many relationship between students and courses.
 
 ### Step 4 — Define Constraints
 
-Examples:
+Examples from the model:
 
-- Email must be unique.
-- Required fields cannot be empty.
-- Course credits should be within the allowed range.
-- Grade should contain only valid values.
-
-### Step 5 — Choose Data Types
-
-Examples:
-
-```text
-id       → INTEGER
-name     → VARCHAR
-email    → VARCHAR
-date     → DATE
-```
-
-### Step 6 — Create the Model
-
-The final model can be represented using:
-
-- ER diagrams.
-- SQL tables.
-- ORM classes.
-- ODM schemas.
+- Student email must be unique.
+- Course credits must be between 1 and 6.
+- Grade must be one of:
+  - A+
+  - A
+  - B+
+  - B
+  - C+
+  - C
+  - D
+  - F
+  - `NULL`
+- Enrollment date cannot be in the future.
 
 ---
 
 # 4. Object-Relational Mapping (ORM)
 
-ORM stands for **Object-Relational Mapping**.
+**Object-Relational Mapping (ORM)** maps programming-language objects to relational database tables.
 
-ORM allows developers to work with database tables using programming-language objects instead of writing raw SQL for every operation.
+Instead of manually writing SQL for every operation, developers work with objects. The ORM translates those operations into database queries.
 
-### Simple Explanation
+### Benefits
 
-Without ORM:
-
-```sql
-SELECT * FROM students;
-```
-
-With ORM:
-
-```python
-students = session.query(Student).all()
-```
-
-The ORM converts programming-language operations into appropriate database operations.
-
-## Advantages of ORM
-
-- Less raw SQL.
-- Easier database interaction.
-- Object-oriented programming.
-- Automatic SQL generation.
-- Relationship handling.
-- Reusable models.
-- Easier application development.
+- Write database operations in the programming language
+- Automatic SQL generation
+- Built-in type handling and validation support
+- Database abstraction
+- Relationship handling
+- Lazy and eager loading support
 
 ---
 
-# 5. SQLAlchemy
+# 4.1 SQLAlchemy with Python
 
-SQLAlchemy is a popular ORM framework for Python.
+SQLAlchemy is a Python ORM used to interact with relational databases.
 
-It allows Python classes to represent database tables.
-
-### Installation
+## Installation
 
 ```bash
 pip install sqlalchemy
 ```
 
-### Basic Structure
+---
+
+## Database Setup
 
 ```python
-from sqlalchemy import create_engine
-from sqlalchemy.orm import declarative_base
+from sqlalchemy import (
+    create_engine,
+    Column,
+    Integer,
+    String,
+    Date,
+    ForeignKey
+)
 
-engine = create_engine("sqlite:///students.db")
+from sqlalchemy.orm import (
+    declarative_base,
+    sessionmaker,
+    relationship
+)
+
+engine = create_engine(
+    "sqlite:///students.db"
+)
 
 Base = declarative_base()
+
+Session = sessionmaker(
+    bind=engine
+)
+
+session = Session()
 ```
 
-A Python class can then represent a database table.
+---
 
-Example:
+## Department Model
+
+```python
+class Department(Base):
+    __tablename__ = "departments"
+
+    id = Column(
+        Integer,
+        primary_key=True
+    )
+
+    name = Column(
+        String(100),
+        unique=True,
+        nullable=False
+    )
+
+    students = relationship(
+        "Student",
+        back_populates="department"
+    )
+
+    courses = relationship(
+        "Course",
+        back_populates="department"
+    )
+```
+
+---
+
+## Student Model
 
 ```python
 class Student(Base):
     __tablename__ = "students"
 
-    id = Column(Integer, primary_key=True)
-    name = Column(String(100), nullable=False)
-    email = Column(String(100), unique=True, nullable=False)
+    id = Column(
+        Integer,
+        primary_key=True
+    )
+
+    name = Column(
+        String(100),
+        nullable=False
+    )
+
+    email = Column(
+        String(100),
+        unique=True,
+        nullable=False
+    )
+
+    branch = Column(
+        String(50)
+    )
+
+    enrollment_date = Column(
+        Date
+    )
+
+    department_id = Column(
+        Integer,
+        ForeignKey("departments.id")
+    )
+
+    department = relationship(
+        "Department",
+        back_populates="students"
+    )
+
+    enrollments = relationship(
+        "Enrollment",
+        back_populates="student"
+    )
 ```
-
-Here:
-
-- `Student` is the Python class.
-- `students` is the database table.
-- `id` is the primary key.
-- `email` is unique and required.
 
 ---
 
-# 6. CRUD Operations
-
-CRUD represents the four basic database operations.
-
-| Operation | Meaning |
-|---|---|
-| C — Create | Add new data |
-| R — Read | Retrieve data |
-| U — Update | Modify existing data |
-| D — Delete | Remove data |
-
-### Create
+## Course Model
 
 ```python
-student = Student(
+class Course(Base):
+    __tablename__ = "courses"
+
+    id = Column(
+        String(10),
+        primary_key=True
+    )
+
+    title = Column(
+        String(100),
+        nullable=False
+    )
+
+    credits = Column(
+        Integer,
+        nullable=False
+    )
+
+    department_id = Column(
+        Integer,
+        ForeignKey("departments.id")
+    )
+
+    department = relationship(
+        "Department",
+        back_populates="courses"
+    )
+
+    enrollments = relationship(
+        "Enrollment",
+        back_populates="course"
+    )
+```
+
+---
+
+## Enrollment Model
+
+```python
+class Enrollment(Base):
+    __tablename__ = "enrollments"
+
+    student_id = Column(
+        Integer,
+        ForeignKey("students.id"),
+        primary_key=True
+    )
+
+    course_id = Column(
+        String(10),
+        ForeignKey("courses.id"),
+        primary_key=True
+    )
+
+    semester = Column(
+        String(20)
+    )
+
+    grade = Column(
+        String(2)
+    )
+
+    student = relationship(
+        "Student",
+        back_populates="enrollments"
+    )
+
+    course = relationship(
+        "Course",
+        back_populates="enrollments"
+    )
+```
+
+---
+
+## Creating the Tables
+
+```python
+Base.metadata.create_all(engine)
+```
+
+---
+
+## Understanding `back_populates`
+
+`back_populates` creates a bidirectional relationship between SQLAlchemy models.
+
+For example:
+
+```python
+student.department
+```
+
+can access the student's department, while:
+
+```python
+department.students
+```
+
+can access students associated with that department.
+
+This allows related objects to be navigated naturally from application code.
+
+---
+
+# 4.2 CRUD Operations with SQLAlchemy
+
+CRUD means:
+
+```text
+C → Create
+R → Read
+U → Update
+D → Delete
+```
+
+---
+
+## Create
+
+```python
+from datetime import date
+
+new_student = Student(
     name="Aarav",
-    email="aarav@example.com"
+    email="Aarav@upes.ac.in",
+    branch="CSE",
+    enrollment_date=date(
+        2024,
+        8,
+        1
+    ),
+    department_id=1
 )
 
-session.add(student)
+session.add(new_student)
+
 session.commit()
 ```
 
-### Read
-
-```python
-students = session.query(Student).all()
-```
-
-### Update
-
-```python
-student.branch = "ECE"
-session.commit()
-```
-
-### Delete
-
-```python
-session.delete(student)
-session.commit()
-```
-
-CRUD is one of the most important operations in backend database applications.
+`session.commit()` is important because it persists the changes to the database.
 
 ---
 
-# 7. Object-Document Modeling (ODM)
+## Read
 
-ODM stands for **Object-Document Modeling**.
+Retrieve all CSE students:
 
-ODM is commonly used with document databases such as MongoDB.
+```python
+students = (
+    session
+    .query(Student)
+    .filter(
+        Student.branch == "CSE"
+    )
+    .all()
+)
+```
 
-Instead of mapping objects to relational tables, ODM maps application objects to documents.
+Retrieve a student by ID:
 
-### ORM vs ODM
-
-| ORM | ODM |
-|---|---|
-| Works mainly with relational databases | Works mainly with document databases |
-| Maps objects to tables | Maps objects to documents |
-| Example: SQLAlchemy | Example: Mongoose |
-| SQL databases | MongoDB |
+```python
+student = (
+    session
+    .query(Student)
+    .filter_by(id=1)
+    .first()
+)
+```
 
 ---
 
-# 8. Mongoose
+## Update
 
-Mongoose is a popular ODM library for Node.js and MongoDB.
+```python
+if student:
+    student.branch = "ECE"
 
-### Installation
+    session.commit()
+```
+
+The Python object is modified and the transaction is committed to persist the change.
+
+---
+
+## Delete
+
+```python
+student_to_delete = (
+    session
+    .query(Student)
+    .filter_by(name="Aarav")
+    .first()
+)
+
+if student_to_delete:
+    session.delete(
+        student_to_delete
+    )
+
+    session.commit()
+```
+
+---
+
+# 5. Object Document Modeling (ODM)
+
+Relational databases organize data into tables. Document databases such as MongoDB store documents.
+
+**Object Document Modeling (ODM)** maps application objects to document structures.
+
+For Node.js and MongoDB, this lecture uses **Mongoose**.
+
+---
+
+# 5.1 Mongoose with Node.js
+
+## Installation
 
 ```bash
 npm install mongoose
 ```
 
-### MongoDB Connection
+## Connect to MongoDB
 
-```javascript
-const mongoose = require("mongoose");
+```js
+const mongoose = require('mongoose');
 
 mongoose.connect(
-    "mongodb://127.0.0.1:27017/blog_database"
+  'mongodb://localhost/student_management'
 );
 ```
 
-### Schema Example
+---
 
-```javascript
-const studentSchema = new mongoose.Schema({
+## Student Schema
+
+```js
+const studentSchema =
+  new mongoose.Schema({
 
     name: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
+      trim: true
     },
 
     email: {
-        type: String,
-        required: true,
-        unique: true
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true
     },
 
     branch: {
-        type: String,
-        enum: ["CSE", "ECE", "IT", "ME", "CE"]
+      type: String,
+      enum: [
+        'CSE',
+        'ECE',
+        'IT',
+        'ME',
+        'CE'
+      ]
+    },
+
+    enrollmentDate: {
+      type: Date,
+      default: Date.now
+    },
+
+    courses: [{
+      type:
+        mongoose.Schema.Types.ObjectId,
+      ref: 'Course'
+    }]
+  });
+```
+
+Create the model:
+
+```js
+const Student =
+  mongoose.model(
+    'Student',
+    studentSchema
+  );
+```
+
+---
+
+# 5.2 CRUD with Mongoose
+
+## Create
+
+```js
+async function createStudent() {
+
+  const student =
+    new Student({
+      name: 'Aarav',
+      email:
+        'aarav@upes.ac.in',
+      branch: 'CSE',
+      courses: [
+        'courseId1',
+        'courseId2'
+      ]
+    });
+
+  await student.save();
+}
+```
+
+---
+
+## Read
+
+```js
+async function findStudents() {
+
+  const cseStudents =
+    await Student.find({
+      branch: 'CSE'
+    });
+
+  const student =
+    await Student.findById(
+      'studentId'
+    );
+}
+```
+
+---
+
+## Update
+
+```js
+async function updateStudent() {
+
+  await Student.findByIdAndUpdate(
+    'studentId',
+    {
+      branch: 'ECE'
     }
-
-});
+  );
+}
 ```
-
-A schema defines:
-
-- Fields.
-- Data types.
-- Required fields.
-- Allowed values.
-- Validation rules.
 
 ---
 
-# 9. Data Model Validation
+## Delete
 
-Validation checks data before it is stored.
+```js
+async function deleteStudent() {
 
-It prevents invalid or incorrect data from entering the database.
-
-### Why Validation Is Important
-
-Without validation, an application could store:
-
-```text
-Invalid email
-Empty name
-Invalid branch
-Invalid category
-Incorrect age
+  await Student.findByIdAndDelete(
+    'studentId'
+  );
+}
 ```
-
-Validation improves:
-
-- Data accuracy.
-- Data consistency.
-- Database integrity.
-- Application reliability.
 
 ---
 
-# 10. Pydantic Validation
+# 6. ORM vs ODM
 
-Pydantic is commonly used with FastAPI for validating incoming request data.
+| Feature | ORM | ODM |
+|---|---|---|
+| Meaning | Object-Relational Mapping | Object Document Modeling |
+| Database style | Relational | Document |
+| Data structure | Tables and rows | Documents |
+| Example database | SQLite, PostgreSQL, MySQL | MongoDB |
+| Example framework | SQLAlchemy | Mongoose |
+| Application mapping | Objects ↔ Tables | Objects ↔ Documents |
 
-Example:
+---
+
+# 7. Data Model Validation
+
+Data should be validated before it is stored.
+
+Validation helps:
+
+- Prevent invalid data
+- Maintain consistency
+- Enforce application rules
+- Reduce database corruption
+- Produce predictable application behavior
+
+The lecture demonstrates validation using:
+
+- **Pydantic** with FastAPI
+- **Mongoose schema validation** with Node.js
+
+---
+
+# 7.1 Validation with Pydantic
+
+Pydantic validates incoming request data in FastAPI applications.
+
+## Imports
 
 ```python
-from pydantic import BaseModel, EmailStr, Field
+from fastapi import FastAPI
 
+from pydantic import (
+    BaseModel,
+    EmailStr,
+    Field
+)
+
+from typing import Optional
+from datetime import date
+
+app = FastAPI()
+```
+
+---
+
+## Student Input Model
+
+```python
 class StudentCreate(BaseModel):
 
     name: str = Field(
@@ -473,119 +884,279 @@ class StudentCreate(BaseModel):
 
     branch: str = Field(
         ...,
-        pattern=r"^(CSE|ECE|IT|ME|CE)$"
+        pattern=(
+            r"^(CSE|ECE|IT|ME|CE)$"
+        )
     )
+
+    enrollment_date:
+        Optional[date] = None
 ```
 
-This validates:
+The rules ensure:
 
-- Name length.
-- Email format.
-- Branch value.
-
-Invalid data can be rejected before the application processes it.
+- Name is required.
+- Name is between 1 and 100 characters.
+- Email follows a valid email format.
+- Branch is one of the allowed values.
+- Enrollment date is optional.
 
 ---
 
-# 11. Mongoose Validation
+## Student Response Model
 
-Mongoose provides built-in validation.
+```python
+class StudentResponse(BaseModel):
+    id: int
+    name: str
+    email: str
+    branch: str
+    enrollment_date: date
+```
 
-Example:
+---
 
-```javascript
-const studentSchema = new mongoose.Schema({
+## Example Student Object
+
+```python
+class Student:
+    _id = 0
+
+    def __init__(
+        self,
+        name: str,
+        email: EmailStr,
+        branch: str,
+        enrollment_date:
+            Optional[date]
+    ):
+        Student._id += 1
+
+        self.id = Student._id
+        self.name = name
+        self.email = email
+        self.branch = branch
+
+        self.enrollment_date = (
+            enrollment_date
+            or date.today()
+        )
+```
+
+---
+
+## FastAPI Create Endpoint
+
+```python
+@app.post(
+    "/students",
+    response_model=StudentResponse,
+    status_code=201
+)
+def create_student(
+    student: StudentCreate
+):
+
+    student_data =
+        student.model_dump()
+
+    db_student =
+        Student(**student_data)
+
+    return db_student
+```
+
+Before the endpoint logic runs, Pydantic validates the incoming request.
+
+---
+
+## Testing with JavaScript `fetch()`
+
+```js
+fetch(
+  "http://127.0.0.1:8000/students",
+  {
+    method: "POST",
+
+    headers: {
+      "Content-Type":
+        "application/json"
+    },
+
+    body: JSON.stringify({
+      name: "Rahul",
+      email:
+        "rahul@example.com",
+      branch: "CSE",
+      enrollment_date:
+        "2026-09-29"
+    })
+  }
+)
+.then(response =>
+  response.json()
+)
+.then(data =>
+  console.log(data)
+)
+.catch(error =>
+  console.error(
+    "Error:",
+    error
+  )
+);
+```
+
+Example successful response:
+
+```json
+{
+  "id": 1,
+  "name": "Rahul",
+  "email": "rahul@example.com",
+  "branch": "CSE",
+  "enrollment_date": "2026-09-29"
+}
+```
+
+---
+
+## Testing Invalid Data
+
+```js
+fetch(
+  "http://127.0.0.1:8000/students",
+  {
+    method: "POST",
+
+    headers: {
+      "Content-Type":
+        "application/json"
+    },
+
+    body: JSON.stringify({
+      name: "",
+      email: "invalid-email",
+      branch: "BCA",
+      enrollment_date:
+        "invalid-date"
+    })
+  }
+)
+.then(response =>
+  response.json()
+)
+.then(data =>
+  console.log(data)
+);
+```
+
+This should result in validation errors because the submitted data violates the Pydantic model.
+
+The endpoint can also be tested with tools such as Postman or Insomnia.
+
+---
+
+# 7.2 Validation with Mongoose
+
+Mongoose provides validation rules directly inside schemas.
+
+```js
+const studentSchema =
+  new mongoose.Schema({
 
     name: {
-        type: String,
-        required: [true, "Name is required"],
-        minlength: [1, "Name cannot be empty"],
-        maxlength: [100, "Name cannot exceed 100 characters"]
+      type: String,
+
+      required: [
+        true,
+        'Name is required'
+      ],
+
+      minlength: [
+        1,
+        'Name cannot be empty'
+      ],
+
+      maxlength: [
+        100,
+        'Name cannot exceed 100 characters'
+      ]
     },
 
     email: {
-        type: String,
-        required: [true, "Email is required"],
-        unique: true,
-        match: [
-            /^\S+@\S+\.\S+$/,
-            "Invalid email format"
-        ]
+      type: String,
+
+      required: [
+        true,
+        'Email is required'
+      ],
+
+      unique: true,
+
+      match: [
+        /^\S+@\S+\.\S+$/,
+        'Invalid email format'
+      ]
     },
 
     age: {
-        type: Number,
-        min: [17, "Minimum age is 17"],
-        max: [30, "Maximum age is 30"]
+      type: Number,
+
+      min: [
+        17,
+        'Minimum age is 17'
+      ],
+
+      max: [
+        30,
+        'Maximum age is 30'
+      ]
     }
-
-});
+  });
 ```
 
-This ensures that invalid values are detected.
+This schema demonstrates:
+
+- Required fields
+- Minimum length
+- Maximum length
+- Unique values
+- Pattern matching
+- Numeric ranges
 
 ---
 
-# 12. Common Validation Rules
+# 8. Data Modeling Best Practices
 
-### Required
-
-```javascript
-required: true
-```
-
-The field cannot be missing.
-
-### Minimum Length
-
-```javascript
-minlength: 3
-```
-
-The value must contain at least 3 characters.
-
-### Maximum Length
-
-```javascript
-maxlength: 100
-```
-
-The value cannot exceed 100 characters.
-
-### Unique
-
-```javascript
-unique: true
-```
-
-The value should be unique.
-
-### Enum
-
-```javascript
-enum: ["CSE", "ECE", "IT"]
-```
-
-Only the specified values are accepted.
-
-### Range
-
-```javascript
-min: 17,
-max: 30
-```
-
-The value must remain within the specified range.
+| Practice | Description |
+|---|---|
+| Start with requirements | Understand business needs before designing models |
+| Use meaningful names | Prefer names such as `enrollment_date` instead of unclear abbreviations |
+| Normalize appropriately | Reduce unnecessary duplication without over-normalizing |
+| Add timestamps | Use creation/update timestamps for auditing |
+| Use enums for fixed values | Useful for branch, status, and grade fields |
+| Index frequently queried fields | Improve query performance |
+| Plan for scale | Consider future data growth |
+| Document models | Improve team collaboration and maintainability |
 
 ---
 
-# 13. Data Modeling Best Practices
+## 8.1 Start with Requirements
 
-## 13.1 Start With Requirements
+Do not begin by immediately creating database tables.
 
-Understand the business requirements before designing the database.
+First understand:
 
-## 13.2 Use Meaningful Names
+- What the application must do
+- What data must be stored
+- Which entities exist
+- How entities relate
+- Which business rules apply
+
+---
+
+## 8.2 Use Meaningful Names
 
 Good:
 
@@ -599,13 +1170,19 @@ Poor:
 ed
 ```
 
-## 13.3 Normalize Appropriately
+Names should make the model understandable without requiring unnecessary explanation.
 
-Normalization reduces unnecessary duplication.
+---
 
-However, excessive normalization can sometimes affect performance.
+## 8.3 Normalize Appropriately
 
-## 13.4 Add Timestamps
+Normalization helps avoid duplicated data and update anomalies.
+
+However, over-normalization can make queries unnecessarily complex and may affect performance.
+
+---
+
+## 8.4 Add Timestamps
 
 Useful fields include:
 
@@ -614,25 +1191,27 @@ created_at
 updated_at
 ```
 
-They help track changes.
+They help with auditing and tracking changes.
 
-## 13.5 Use Enums for Fixed Values
+---
 
-Example:
+## 8.5 Use Enums for Fixed Values
+
+Enums are useful when a field has a controlled set of values.
+
+Examples:
 
 ```text
-CSE
-ECE
-IT
-ME
-CE
+branch
+status
+grade
 ```
 
-This prevents unexpected values.
+---
 
-## 13.6 Use Indexes
+## 8.6 Index Frequently Queried Fields
 
-Frequently searched fields can be indexed to improve query performance.
+Indexes can improve performance when applications frequently search or filter by particular fields.
 
 Example:
 
@@ -641,122 +1220,245 @@ CREATE INDEX idx_students_branch
 ON students(branch);
 ```
 
-## 13.7 Plan for Scale
+---
 
-The model should be able to support future increases in:
+## 8.7 Plan for Scale
 
-- Users.
-- Records.
-- Transactions.
-- Queries.
+Consider future growth when designing:
 
-## 13.8 Document Models
-
-Clear documentation helps developers understand and maintain the application.
+- Relationships
+- Indexes
+- Data types
+- Query patterns
+- Storage requirements
 
 ---
 
-# 14. Practical Evidence / Screenshots
+## 8.8 Document the Models
 
-The following screenshot provides evidence of the validation implementation associated with the Lecture 15 concepts.
+Clear model documentation helps developers understand:
 
-### Mongoose Validation Testing
+- Entities
+- Attributes
+- Relationships
+- Constraints
+- Validation rules
 
-The implementation demonstrates:
-
-- Required-field validation.
-- Length validation.
-- Enum validation.
-- Unique constraint testing.
-- Valid data acceptance.
-- Comment validation.
-
-![Mongoose Validation Testing](screenshots/task5-validation.png)
+Good models should be understandable and maintainable by a team.
 
 ---
 
-# 15. ORM and ODM Comparison
+# 9. Complete Modeling Workflow
 
-| Feature | ORM | ODM |
-|---|---|---|
-| Full Form | Object-Relational Mapping | Object-Document Modeling |
-| Database Type | Relational | Document |
-| Structure | Tables and rows | Documents and collections |
-| Example | SQLAlchemy | Mongoose |
-| Language Example | Python | JavaScript/Node.js |
-| Main Database Example | SQLite/PostgreSQL | MongoDB |
-
----
-
-# 16. Conceptual Flow
+A practical workflow can be summarized as:
 
 ```text
 Business Requirements
-        |
-        v
+        ↓
 Identify Entities
-        |
-        v
+        ↓
 Identify Attributes
-        |
-        v
-Identify Relationships
-        |
-        v
+        ↓
+Define Relationships
+        ↓
 Define Constraints
-        |
-        v
-Create Data Model
-        |
-        +----------------------+
-        |                      |
-        v                      v
-      ORM                    ODM
-        |                      |
-        v                      v
- SQLAlchemy                Mongoose
-        |                      |
-        v                      v
-Relational DB             MongoDB
+        ↓
+Conceptual Model
+        ↓
+Logical Model
+        ↓
+Physical Model
+        ↓
+ORM / ODM Models
+        ↓
+Validation
+        ↓
+CRUD Operations
+        ↓
+Application
 ```
 
 ---
 
-# 17. Key Takeaways
+# 10. Key Takeaways
 
-1. Data modeling provides a blueprint for application data.
-2. Data modeling has three levels:
-   - Conceptual
-   - Logical
-   - Physical
-3. Business requirements must be converted into entities, attributes, relationships, and constraints.
-4. ORM maps application objects to relational database tables.
-5. SQLAlchemy is a popular Python ORM.
-6. ODM maps application objects to document databases.
-7. Mongoose is a popular Node.js ODM for MongoDB.
-8. CRUD means Create, Read, Update, and Delete.
-9. Validation prevents invalid data from being stored.
-10. Good data models should be clear, maintainable, scalable, and properly documented.
-
----
-
-# 18. Conclusion
-
-Data modeling is an important part of backend development because it connects business requirements with actual database implementation.
-
-Conceptual, logical, and physical models help developers progressively move from a high-level idea to a working database design.
-
-ORM frameworks such as SQLAlchemy make relational database interaction easier in Python, while ODM frameworks such as Mongoose provide structured interaction with MongoDB.
-
-Validation further improves data quality by preventing invalid information from entering the database.
-
-Therefore, a well-designed data model helps create backend applications that are reliable, maintainable, and scalable.
+1. Data modeling translates business requirements into structured database designs.
+2. A data model defines data structures, relationships, and rules.
+3. Data modeling has three levels: **conceptual, logical, and physical**.
+4. Conceptual models focus on entities and relationships.
+5. Logical models add attributes, keys, data types, and constraints.
+6. Physical models implement the design in a specific DBMS.
+7. ORM maps programming-language objects to relational database tables.
+8. ODM maps application objects to document database structures.
+9. SQLAlchemy is used in Python for ORM-based database interaction.
+10. Mongoose provides ODM functionality for MongoDB and Node.js.
+11. CRUD operations are Create, Read, Update, and Delete.
+12. Pydantic can validate FastAPI request data.
+13. Mongoose schemas can enforce validation rules.
+14. Validation prevents invalid data from entering the application/database.
+15. Models should be designed before application code is written.
+16. Good data models should support future growth and remain understandable.
 
 ---
 
-## References
+# 11. Lab Exercises
 
-1. Lecture 15 — Data Modeling: Designing Models for Applications, Backend Development, Unit 2.
-2. SQLAlchemy documentation — ORM and database modeling concepts.
-3. Mongoose documentation — Schemas, Models, and Validation.
-4. Pydantic documentation — Data validation and parsing.
+## Exercise 1 — E-Commerce Conceptual Model
+
+Design a conceptual data model for an E-Commerce system containing:
+
+```text
+Product
+Order
+Customer
+Cart
+```
+
+Identify:
+
+- Important attributes
+- Relationships
+- Cardinalities
+
+Example starting point:
+
+```text
+Customer ──Has──> Cart
+
+Customer ──Places──> Order
+
+Order ──Contains──> Product
+
+Cart ──Contains──> Product
+```
+
+---
+
+## Exercise 2 — Student Management with SQLAlchemy
+
+Create SQLAlchemy models for:
+
+```text
+Student
+Department
+Course
+Enrollment
+```
+
+Add appropriate:
+
+- Primary keys
+- Foreign keys
+- Relationships
+- Constraints
+
+---
+
+## Exercise 3 — SQLAlchemy CRUD
+
+Implement the following operations:
+
+### Create
+
+Create a new student and assign the student to a department.
+
+### Read
+
+Retrieve all students belonging to a specific branch.
+
+### Update
+
+Update a student's branch.
+
+### Delete
+
+Delete a student and verify the intended relationship/cascade behavior.
+
+---
+
+## Exercise 4 — Blog Application with Mongoose
+
+Create Mongoose schemas for:
+
+```text
+Post
+Comment
+```
+
+Possible relationship:
+
+```text
+Post
+  |
+  └── Has Many ──> Comments
+```
+
+Add fields suitable for a blog application.
+
+---
+
+## Exercise 5 — Validation
+
+Add validation rules to your models.
+
+Include:
+
+- Required fields
+- Unique constraints
+- Enum values
+- String-length restrictions
+- Format validation where required
+
+---
+
+# 12. Summary
+
+Data modeling connects business requirements with database and application design.
+
+The three levels of modeling provide a progression from high-level ideas to implementation:
+
+```text
+Conceptual → Logical → Physical
+```
+
+ORM and ODM frameworks allow developers to work with application objects instead of directly handling every database operation at a lower level.
+
+The main technologies demonstrated are:
+
+```text
+Python + SQLAlchemy → ORM → Relational Database
+
+Node.js + Mongoose → ODM → MongoDB
+
+FastAPI + Pydantic → Request/Data Validation
+```
+
+Validation is an essential part of a reliable data model because it prevents invalid values from entering the application.
+
+---
+
+# Conclusion
+
+Effective backend development requires more than simply creating database tables. A well-designed data model begins with business requirements, identifies entities and relationships, defines constraints, and gradually evolves into a physical implementation.
+
+SQLAlchemy demonstrates how relational database structures can be represented as Python objects, while Mongoose demonstrates how MongoDB documents can be modeled in Node.js. Pydantic and Mongoose validation rules help enforce data integrity before values are stored.
+
+A strong data-modeling process therefore follows a clear path:
+
+```text
+Understand Requirements
+        ↓
+Design the Model
+        ↓
+Define Relationships
+        ↓
+Apply Constraints
+        ↓
+Implement with ORM / ODM
+        ↓
+Validate Data
+        ↓
+Perform CRUD Operations
+```
+
+Designing these models before writing the rest of the application provides a stronger foundation for maintainable and scalable backend systems.
