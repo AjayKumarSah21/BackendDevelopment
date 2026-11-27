@@ -20,7 +20,9 @@
 ## Project notes
 - `models.py`: Task data model; `views.py`: CRUD logic; `urls.py`: URL mappings.
 - `admin.py` registers and configures the Task model in Django Admin. `apps.py` configures the Django application and its display name.
+<div>
 - `{% extends %}` inherits a full shared layout (`base.html`); `{% include %}` inserts reusable fragments (`header.html` and `footer.html`).
+</div>
 - All state-changing forms use POST and CSRF tokens. JavaScript adds a character counter, input focus and delete confirmation.
 - The database file and virtual environment are intentionally excluded from the submission ZIP. `migrate` creates the database locally.
 - Development configuration only: set a private SECRET_KEY, DEBUG=False, correct ALLOWED_HOSTS, and production static hosting before deploying.
