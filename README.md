@@ -54,7 +54,7 @@
 <div align="center">
 <table>
 <thead>
-<tr><th align="center">#</th><th align="left">Experiment</th><th align="left">Quick Links</th></tr>
+<tr><th align="center">#</th><th align="left">Experiment</th><th align="left">Quick Links</th><th align="left">Report</th></tr>
 </thead>
 <tbody>
 <tr>
@@ -64,32 +64,32 @@
 <a href="./Lab/Exp01/index.html"><img src="https://img.shields.io/badge/Open_Page-index.html-06B6D4?style=flat-square&logo=html5&logoColor=white" alt="Open Page" /></a>
 <a href="https://github.com/AjayKumarSah21/BackendDevelopment/tree/main/Lab/Exp01"><img src="https://img.shields.io/badge/GitHub-Files-24292F?style=flat-square&logo=github&logoColor=white" alt="GitHub Files" /></a>
 </td>
-</tr>
+<td><a href="https://ajaykumarsah21.github.io/BackendDevelopment/Lab/Exp01/report.html" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/View-HTML_Report-2563EB?style=flat-square&logo=readthedocs&logoColor=white" alt="View HTML Report" /></a></td></tr>
 <tr>
 <td align="center"><b>02</b></td>
 <td><b>Experiment 12 A</b></td>
 <td><a href="https://github.com/AjayKumarSah21/BackendDevelopment/tree/main/Lab/Exp12"><img src="https://img.shields.io/badge/View-Folder-8B5CF6?style=flat-square&logo=github&logoColor=white" alt="View Folder" /></a></td>
-</tr>
+<td><a href="https://ajaykumarsah21.github.io/BackendDevelopment/Lab/Exp12/report.html" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/View-HTML_Report-2563EB?style=flat-square&logo=readthedocs&logoColor=white" alt="View HTML Report" /></a></td></tr>
 <tr>
 <td align="center"><b>03</b></td>
 <td><b>Experiment 12 B</b></td>
 <td><a href="https://github.com/AjayKumarSah21/BackendDevelopment/tree/main/Lab/Exp12B"><img src="https://img.shields.io/badge/View-Folder-8B5CF6?style=flat-square&logo=github&logoColor=white" alt="View Folder" /></a></td>
-</tr>
+<td><a href="https://ajaykumarsah21.github.io/BackendDevelopment/Lab/Exp12B/report.html" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/View-HTML_Report-2563EB?style=flat-square&logo=readthedocs&logoColor=white" alt="View HTML Report" /></a></td></tr>
 <tr>
 <td align="center"><b>04</b></td>
 <td><b>Experiment 13 A</b></td>
 <td><a href="https://github.com/AjayKumarSah21/BackendDevelopment/tree/main/Lab/Experiment13A"><img src="https://img.shields.io/badge/View-Folder-8B5CF6?style=flat-square&logo=github&logoColor=white" alt="View Folder" /></a></td>
-</tr>
+<td><a href="https://ajaykumarsah21.github.io/BackendDevelopment/Lab/Experiment13A/report.html" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/View-HTML_Report-2563EB?style=flat-square&logo=readthedocs&logoColor=white" alt="View HTML Report" /></a></td></tr>
 <tr>
 <td align="center"><b>05</b></td>
 <td><b>Experiment 7 &amp; 8</b></td>
 <td><a href="https://github.com/AjayKumarSah21/BackendDevelopment/tree/main/Lab/Experiment07_08"><img src="https://img.shields.io/badge/View-Folder-8B5CF6?style=flat-square&logo=github&logoColor=white" alt="View Folder" /></a></td>
-</tr>
+<td><a href="https://ajaykumarsah21.github.io/BackendDevelopment/Lab/Experiment07_08/report.html" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/View-HTML_Report-2563EB?style=flat-square&logo=readthedocs&logoColor=white" alt="View HTML Report" /></a></td></tr>
 <tr>
 <td align="center"><b>06</b></td>
 <td><b>Experiment 15 — Django Todo (Complete)</b></td>
 <td><a href="https://github.com/AjayKumarSah21/BackendDevelopment/tree/main/Lab/Django_Todo_Experiment15_Complete"><img src="https://img.shields.io/badge/View-Folder-092E20?style=flat-square&logo=django&logoColor=white" alt="View Folder" /></a></td>
-</tr>
+<td><a href="https://ajaykumarsah21.github.io/BackendDevelopment/Lab/Django_Todo_Experiment15_Complete/report.html" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/View-HTML_Report-2563EB?style=flat-square&logo=readthedocs&logoColor=white" alt="View HTML Report" /></a></td></tr>
 </tbody>
 </table>
 </div>
@@ -108,89 +108,89 @@
 <div align="center">
 <table>
 <thead>
-<tr><th align="center">#</th><th align="left">Topic</th><th align="left">Quick Links</th></tr>
+<tr><th align="center">#</th><th align="left">Topic</th><th align="left">Quick Links</th><th align="left">Report</th></tr>
 </thead>
 <tbody>
 <tr>
 <td align="center"><b>01</b></td>
 <td><b>Lecture 3</b></td>
 <td><a href="https://github.com/AjayKumarSah21/BackendDevelopment/tree/main/Theory/Lecture3"><img src="https://img.shields.io/badge/Open-Lecture_3-10B981?style=flat-square&logo=github&logoColor=white" alt="Lecture 3" /></a></td>
-</tr>
+<td align="center">—</td></tr>
 <tr>
 <td align="center"><b>02</b></td>
 <td><b>Lecture 4</b></td>
 <td><a href="https://github.com/AjayKumarSah21/BackendDevelopment/tree/main/Theory/Lecture4"><img src="https://img.shields.io/badge/Open-Lecture_4-10B981?style=flat-square&logo=github&logoColor=white" alt="Lecture 4" /></a></td>
-</tr>
+<td align="center">—</td></tr>
 <tr>
 <td align="center"><b>03</b></td>
 <td><b>Lecture 5</b></td>
 <td><a href="https://github.com/AjayKumarSah21/BackendDevelopment/tree/main/Theory/Lecture5"><img src="https://img.shields.io/badge/Open-Lecture_5-10B981?style=flat-square&logo=github&logoColor=white" alt="Lecture 5" /></a></td>
-</tr>
+<td align="center">—</td></tr>
 <tr>
 <td align="center"><b>04</b></td>
 <td><b>Lecture 6</b></td>
 <td><a href="https://github.com/AjayKumarSah21/BackendDevelopment/tree/main/Theory/Lecture%206"><img src="https://img.shields.io/badge/Open-Lecture_6-10B981?style=flat-square&logo=github&logoColor=white" alt="Lecture 6" /></a></td>
-</tr>
+<td align="center">—</td></tr>
 <tr>
 <td align="center"><b>05</b></td>
 <td><b>Lecture 7</b></td>
 <td><a href="https://github.com/AjayKumarSah21/BackendDevelopment/tree/main/Theory/Lecture%207"><img src="https://img.shields.io/badge/Open-Lecture_7-10B981?style=flat-square&logo=github&logoColor=white" alt="Lecture 7" /></a></td>
-</tr>
+<td align="center">—</td></tr>
 <tr>
 <td align="center"><b>06</b></td>
 <td><b>Lecture 8</b></td>
 <td><a href="https://github.com/AjayKumarSah21/BackendDevelopment/tree/main/Theory/Lecture8"><img src="https://img.shields.io/badge/Open-Lecture_8-10B981?style=flat-square&logo=github&logoColor=white" alt="Lecture 8" /></a></td>
-</tr>
+<td align="center">—</td></tr>
 <tr>
 <td align="center"><b>07</b></td>
 <td><b>Lecture 15 — Data Modeling</b></td>
 <td><a href="https://github.com/AjayKumarSah21/BackendDevelopment/tree/main/Theory/Lecture15"><img src="https://img.shields.io/badge/Open-Data_Modeling-F59E0B?style=flat-square&logo=github&logoColor=white" alt="Data Modeling" /></a></td>
-</tr>
+<td align="center">—</td></tr>
 <tr>
 <td align="center"><b>08</b></td>
 <td><b>Express Demo</b></td>
 <td><a href="https://github.com/AjayKumarSah21/BackendDevelopment/tree/main/Theory/express-demo"><img src="https://img.shields.io/badge/Open-Express_Demo-EC4899?style=flat-square&logo=express&logoColor=white" alt="Express Demo" /></a></td>
-</tr>
+<td align="center">—</td></tr>
 <tr>
 <td align="center"><b>09</b></td>
 <td><b>Lecture 19</b></td>
 <td><a href="https://github.com/AjayKumarSah21/BackendDevelopment/tree/main/Theory/Lecture19"><img src="https://img.shields.io/badge/Open-Lecture_19-10B981?style=flat-square&logo=github&logoColor=white" alt="Lecture 19" /></a></td>
-</tr>
+<td align="center">—</td></tr>
 <tr>
 <td align="center"><b>10</b></td>
 <td><b>Lecture 26</b></td>
 <td><a href="https://github.com/AjayKumarSah21/BackendDevelopment/tree/main/Theory/Lecture26"><img src="https://img.shields.io/badge/Open-Lecture_26-10B981?style=flat-square&logo=github&logoColor=white" alt="Lecture 26" /></a></td>
-</tr>
+<td align="center">—</td></tr>
 <tr>
 <td align="center"><b>11</b></td>
 <td><b>Lecture 28 — Third-Party API (Django)</b></td>
 <td><a href="https://github.com/AjayKumarSah21/BackendDevelopment/tree/main/Theory/Lecture28_ThirdParty_API_Django"><img src="https://img.shields.io/badge/Open-Lecture_28-092E20?style=flat-square&logo=django&logoColor=white" alt="Lecture 28" /></a></td>
-</tr>
+<td align="center">—</td></tr>
 <tr>
 <td align="center"><b>12</b></td>
 <td><b>Lecture 29 — Testing &amp; Debugging (Django)</b></td>
 <td><a href="https://github.com/AjayKumarSah21/BackendDevelopment/tree/main/Theory/Django_Lecture29_Testing_Debugging_All_Tasks"><img src="https://img.shields.io/badge/Open-Lecture_29-092E20?style=flat-square&logo=django&logoColor=white" alt="Lecture 29" /></a></td>
-</tr>
+<td align="center">—</td></tr>
 <tr>
 <td align="center"><b>13</b></td>
 <td><b>Lectures 37–39</b></td>
 <td><a href="https://github.com/AjayKumarSah21/BackendDevelopment/tree/main/Theory/Lecture37-39"><img src="https://img.shields.io/badge/Open-Lectures_37--39-10B981?style=flat-square&logo=github&logoColor=white" alt="Lectures 37-39" /></a></td>
-</tr>
+<td align="center">—</td></tr>
 <tr>
 <td align="center"><b>14</b></td>
 <td><b>Docker Hands-on Project</b></td>
 <td><a href="https://github.com/AjayKumarSah21/BackendDevelopment/tree/main/Theory/Docker_Handson_project"><img src="https://img.shields.io/badge/Open-Docker_Project-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker Hands-on Project" /></a></td>
-</tr>
+<td align="center">—</td></tr>
 <tr>
 <td align="center"><b>15</b></td>
 <td><b>Assignment 1 (ASS1)</b></td>
 <td><a href="https://github.com/AjayKumarSah21/BackendDevelopment/tree/main/Theory/ASS1"><img src="https://img.shields.io/badge/Open-Assignment_1-F59E0B?style=flat-square&logo=github&logoColor=white" alt="Assignment 1" /></a></td>
-</tr>
+<td><a href="https://ajaykumarsah21.github.io/BackendDevelopment/Theory/ASS1/report.html" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/View-HTML_Report-2563EB?style=flat-square&logo=readthedocs&logoColor=white" alt="View HTML Report" /></a></td></tr>
 <tr>
 <td align="center"><b>16</b></td>
 <td><b>Assignment 2 (ASS2)</b></td>
 <td><a href="https://github.com/AjayKumarSah21/BackendDevelopment/tree/main/Theory/ASS2"><img src="https://img.shields.io/badge/Open-Assignment_2-F59E0B?style=flat-square&logo=github&logoColor=white" alt="Assignment 2" /></a></td>
-</tr>
+<td><a href="https://ajaykumarsah21.github.io/BackendDevelopment/Theory/ASS2/report.html" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/View-HTML_Report-2563EB?style=flat-square&logo=readthedocs&logoColor=white" alt="View HTML Report" /></a></td></tr>
 </tbody>
 </table>
 </div>
