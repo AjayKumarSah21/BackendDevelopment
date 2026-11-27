@@ -3,6 +3,7 @@ description: Notes and projects about backend development
 theme: minima
 
 # The README inside this Django project contains {% extends %} / {% include %}.
-# Jekyll reads those as Liquid tags and the Pages build fails, so skip the folder.
+# Jekyll reads those as Liquid tags and the Pages build fails, so skip the project folder.
+# (The report .md next to it is wrapped in raw/endraw, so it is published as a page.)
 exclude:
-  - Lab/Django_Todo_Experiment15_Complete
+  - Lab/Django_Todo_Experiment15_Complete/Django_Todo_Experiment15

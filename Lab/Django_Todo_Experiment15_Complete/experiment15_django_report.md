@@ -1,5 +1,7 @@
 # Experiment 15 --- Django To-Do Application
 
+{% raw %}
+
 ## Objective
 
 To build a complete To-Do / Task Tracker application using the Django
@@ -2074,3 +2076,5 @@ Overall, this experiment demonstrates how Django models, ORM queries,
 views, URLs, templates, static assets, SQLite persistence, and the
 administrative interface work together to create a complete CRUD web
 application.
+
+{% endraw %}

@@ -1,5 +1,7 @@
 # Server-Side Rendering and Templating Engines
 
+{% raw %}
+
 ## Lecture Information
 
 - **Lecture:** 08
@@ -1035,3 +1037,5 @@ Request → Fetch Data → Render Template → Send HTML → Display Page
 ```
 
 Understanding templating, dynamic rendering, and static-file serving provides a foundation for building server-rendered dashboards, blogs, content-management systems, and e-commerce websites.
+
+{% endraw %}
