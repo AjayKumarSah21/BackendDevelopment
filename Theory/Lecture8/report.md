@@ -657,6 +657,8 @@ if __name__ == "__main__":
 
 ## 15. EJS vs Jinja2
 
+{% raw %}
+
 | Feature | EJS — Express | Jinja2 — FastAPI |
 |---|---|---|
 | Output variable | `<%= name %>` | `{{ name }}` |
@@ -665,6 +667,8 @@ if __name__ == "__main__":
 | End block | `<% } %>` | `{% endif %}` / `{% endfor %}` |
 | Include | `<%- include('header') %>` | `{% include 'header.html' %}` |
 | Filters / transformations | JavaScript functions | `{{ name\|upper }}`, `{{ list\|length }}` |
+
+{% endraw %}
 
 Both follow the same basic principle:
 
